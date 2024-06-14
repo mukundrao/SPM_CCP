@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <div>
+        {{ form.tenure.label }}
+        {{ form.tenure }}
+        {% if form.tenure.errors %}
+            {% for error in form.tenure.errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <br>
+    <div>
+        {{ form.is_monthly_contract.label }}
+        {{ form.is_monthly_contract }}
+        {% if form.is_monthly_contract.errors %}
+            {% for error in form.is_monthly_contract.errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <br>
+    <div>
+        {{ form.availed_online_security.label }}
+        {{ form.availed_online_security }}
+        {% if form.availed_online_security.errors %}
+            {% for error in form.availed_online_security.errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <br>
+    <div>
+        {{ form.availed_tech_support.label }}
+        {{ form.availed_tech_support }}
+        {% if form.availed_tech_support.errors %}
+            {% for error in form.availed_tech_support.errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <br>
+    <div>
+        {{ form.availed_fiber_optic_internet_service.label }}
+        {{ form.availed_fiber_optic_internet_service }}
+        {% if form.availed_fiber_optic_internet_service.errors %}
+            {% for error in form.availed_fiber_optic_internet_service.errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <br>
+    <div>
+        {{ form.makes_electronic_check_payment.label }}
+        {{ form.makes_electronic_check_payment }}
+        {% if form.makes_electronic_check_payment.errors %}
+            {% for error in form.makes_electronic_check_payment.errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    <br>
+    <div>{{ form.submit() }}</div>
+    <br>
+    <div>
+        {{ output }}
+    </div>
+    <br>
+    <div>
+        <p>Redirect to Homepage? <a href="{{ url_for('home') }}">Home</a></p>
+    </div>
+</form>
+{% endblock content %}
