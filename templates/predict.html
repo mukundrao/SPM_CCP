@@ -1,76 +1,160 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<form action="" method="post">
-    {{ form.hidden_tag() }}
-    <div>
-        {{ form.tenure.label }}
-        {{ form.tenure }}
-        {% if form.tenure.errors %}
-            {% for error in form.tenure.errors %}
-                <div>{{ error }}</div>
-            {% endfor %}
-        {% endif %}
+<div class="container-fluid mt-5">
+    <div class="card">
+        <div class="card-header text-center bg-primary text-white">
+            <h3>Customer Churn Prediction</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <form action="" method="post">
+                        {{ form.hidden_tag() }}
+
+                        <div class="form-group row">
+                            <label for="tenure" class="col-sm-4 col-form-label text-right">{{ form.tenure.label }}</label>
+                            <div class="col-sm-8">
+                                {{ form.tenure(class="form-control", id="tenure") }}
+                                {% if form.tenure.errors %}
+                                    <div class="alert alert-danger mt-2">
+                                        {% for error in form.tenure.errors %}
+                                            {{ error }}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">{{ form.is_monthly_contract.label }}</label>
+                            <div class="col-sm-8">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    {% for subfield in form.is_monthly_contract %}
+                                        <label class="btn btn-outline-primary">
+                                            {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                                {% if form.is_monthly_contract.errors %}
+                                    <div class="alert alert-danger mt-2">
+                                        {% for error in form.is_monthly_contract.errors %}
+                                            {{ error }}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">{{ form.availed_online_security.label }}</label>
+                            <div class="col-sm-8">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    {% for subfield in form.availed_online_security %}
+                                        <label class="btn btn-outline-primary">
+                                            {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                                {% if form.availed_online_security.errors %}
+                                    <div class="alert alert-danger mt-2">
+                                        {% for error in form.availed_online_security.errors %}
+                                            {{ error }}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">{{ form.availed_tech_support.label }}</label>
+                            <div class="col-sm-8">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    {% for subfield in form.availed_tech_support %}
+                                        <label class="btn btn-outline-primary">
+                                            {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                                {% if form.availed_tech_support.errors %}
+                                    <div class="alert alert-danger mt-2">
+                                        {% for error in form.availed_tech_support.errors %}
+                                            {{ error }}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">{{ form.availed_fiber_optic_internet_service.label }}</label>
+                            <div class="col-sm-8">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    {% for subfield in form.availed_fiber_optic_internet_service %}
+                                        <label class="btn btn-outline-primary">
+                                            {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                                {% if form.availed_fiber_optic_internet_service.errors %}
+                                    <div class="alert alert-danger mt-2">
+                                        {% for error in form.availed_fiber_optic_internet_service.errors %}
+                                            {{ error }}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-4 col-form-label text-right">{{ form.makes_electronic_check_payment.label }}</label>
+                            <div class="col-sm-8">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    {% for subfield in form.makes_electronic_check_payment %}
+                                        <label class="btn btn-outline-primary">
+                                            {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                                {% if form.makes_electronic_check_payment.errors %}
+                                    <div class="alert alert-danger mt-2">
+                                        {% for error in form.makes_electronic_check_payment.errors %}
+                                            {{ error }}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <div class="col-sm-12 text-center">
+                                {{ form.submit(class="btn btn-primary btn-lg btn-block") }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-6">
+                    {% if predictions %}
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                <h4 class="text-center">Predictions</h4>
+                            </div>
+                            <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                                {% for model_name, prediction in predictions.items() %}
+                                    <div class="alert alert-info">
+                                        <strong>{{ model_name }}:</strong> {{ prediction }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <p>Redirect to Homepage? <a href="{{ url_for('home') }}" class="custom-link">Home</a></p>
+            </div>
+        </div>
     </div>
-    <br>
-    <div>
-        {{ form.is_monthly_contract.label }}
-        {{ form.is_monthly_contract }}
-        {% if form.is_monthly_contract.errors %}
-            {% for error in form.is_monthly_contract.errors %}
-                <div>{{ error }}</div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    <br>
-    <div>
-        {{ form.availed_online_security.label }}
-        {{ form.availed_online_security }}
-        {% if form.availed_online_security.errors %}
-            {% for error in form.availed_online_security.errors %}
-                <div>{{ error }}</div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    <br>
-    <div>
-        {{ form.availed_tech_support.label }}
-        {{ form.availed_tech_support }}
-        {% if form.availed_tech_support.errors %}
-            {% for error in form.availed_tech_support.errors %}
-                <div>{{ error }}</div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    <br>
-    <div>
-        {{ form.availed_fiber_optic_internet_service.label }}
-        {{ form.availed_fiber_optic_internet_service }}
-        {% if form.availed_fiber_optic_internet_service.errors %}
-            {% for error in form.availed_fiber_optic_internet_service.errors %}
-                <div>{{ error }}</div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    <br>
-    <div>
-        {{ form.makes_electronic_check_payment.label }}
-        {{ form.makes_electronic_check_payment }}
-        {% if form.makes_electronic_check_payment.errors %}
-            {% for error in form.makes_electronic_check_payment.errors %}
-                <div>{{ error }}</div>
-            {% endfor %}
-        {% endif %}
-    </div>
-    <br>
-    <div>{{ form.submit() }}</div>
-    <br>
-    <div>
-        {{ output }}
-    </div>
-    <br>
-    <div>
-        <p>Redirect to Homepage? <a href="{{ url_for('home') }}">Home</a></p>
-    </div>
-</form>
-{% endblock content %}
+</div>
+{% endblock %}
+
