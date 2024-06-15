@@ -141,9 +141,19 @@
                             </div>
                             <div class="card-body" style="max-height: 400px; overflow-y: auto;">
                                 {% for model_name, prediction in predictions.items() %}
-                                    <div class="alert alert-info">
-                                        <strong>{{ model_name }}:</strong> {{ prediction }}
-                                    </div>
+                                    {% if prediction == "Customer is unlikely to Churn!" %}
+                                        <div class="alert alert-success">
+                                            <strong>{{ model_name }}:</strong> {{ prediction }}
+                                        </div>
+                                    {% elif prediction == "Customer is likely to Churn!" %}
+                                        <div class="alert alert-danger">
+                                            <strong>{{ model_name }}:</strong> {{ prediction }}
+                                        </div>
+                                    {% else %}
+                                        <div class="alert alert-info">
+                                            <strong>{{ model_name }}:</strong> {{ prediction }}
+                                        </div>
+                                    {% endif %}
                                 {% endfor %}
                             </div>
                         </div>
@@ -157,4 +167,3 @@
     </div>
 </div>
 {% endblock %}
-

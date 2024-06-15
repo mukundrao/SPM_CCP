@@ -12,7 +12,8 @@ models = {
     "Random Forest": joblib.load("ccp_1_rf.joblib"),
     "Support Vector Classifier": joblib.load("ccp_1_svc.joblib"),
     "K-Nearest Neighbors": joblib.load("ccp_1_knn.joblib"),
-    "Decision Tree": joblib.load("ccp_1_dt.joblib")
+    "Decision Tree": joblib.load("ccp_1_dt.joblib"),
+    "Voting Classifier": joblib.load("ccp_1_voting.joblib")
 }
 
 @app.route("/")
@@ -37,9 +38,9 @@ def predict():
         for model_name, model in models.items():
             prediction = model.predict(x_new)[0]
             if prediction == 0:
-                predictions[model_name] = "Customer will likely not Churn!"
+                predictions[model_name] = "Customer is unlikely to Churn!"
             elif prediction == 1:
-                predictions[model_name] = "Customer will likely Churn!"
+                predictions[model_name] = "Customer is likely to Churn!"
     else:
         predictions = {"Error": "Please provide valid input details!"}
 
