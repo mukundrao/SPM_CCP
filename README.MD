@@ -1,0 +1,1 @@
+1. layout_copy.html and predict_copy.html are just backup copies of layout.html and predict.html respectively
