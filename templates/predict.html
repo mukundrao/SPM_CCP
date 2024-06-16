@@ -1,169 +1,295 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 70px; /* Ensuring top padding to prevent top cut-off */
+        }
+        .custom-link {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .main-alert {
+            max-width: 1150px; /* Limiting the width of alerts */
+            margin: 0 auto 20px; /* Centering alerts and adding bottom margin */
+        }
+        .custom-link:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        .container-fluid {
+            max-width: 1200px; /* Increased the max-width for a wider form */
+            margin: 0 auto; /* Center the container */
+        }
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-group-toggle .btn {
+            display: flex;
+            align-items: center;
+        }
+        .col-sm-8 {
+            display: flex;
+            align-items: center;
+        }
+        .predict{
+            margin-top: 50px;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        .logout{
+            padding-left: 35px;
+            padding-right: 35px;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            margin-top: 30px;
+        }
+        .body-card{
+            padding-bottom: 50px;
+            margin-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <h1 class="text-center mb-4">Welcome to the {{ title }} page!</h1>
 
-{% block content %}
-<div class="container-fluid mt-5">
-    <div class="card">
-        <div class="card-header text-center bg-primary text-white">
-            <h3>Customer Churn Prediction</h3>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-lg-6">
-                    <form action="" method="post">
-                        {{ form.hidden_tag() }}
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show text-center main-alert" role="alert">
+                    <strong>{{message}}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
-                        <div class="form-group row">
-                            <label for="tenure" class="col-sm-4 col-form-label text-right">{{ form.tenure.label }}</label>
-                            <div class="col-sm-8">
-                                {{ form.tenure(class="form-control", id="tenure") }}
-                                {% if form.tenure.errors %}
-                                    <div class="alert alert-danger mt-2">
-                                        {% for error in form.tenure.errors %}
-                                            {{ error }}<br>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label text-right">{{ form.is_monthly_contract.label }}</label>
-                            <div class="col-sm-8">
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    {% for subfield in form.is_monthly_contract %}
-                                        <label class="btn btn-outline-primary">
-                                            {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
-                                        </label>
-                                    {% endfor %}
-                                </div>
-                                {% if form.is_monthly_contract.errors %}
-                                    <div class="alert alert-danger mt-2">
-                                        {% for error in form.is_monthly_contract.errors %}
-                                            {{ error }}<br>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label text-right">{{ form.availed_online_security.label }}</label>
-                            <div class="col-sm-8">
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    {% for subfield in form.availed_online_security %}
-                                        <label class="btn btn-outline-primary">
-                                            {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
-                                        </label>
-                                    {% endfor %}
-                                </div>
-                                {% if form.availed_online_security.errors %}
-                                    <div class="alert alert-danger mt-2">
-                                        {% for error in form.availed_online_security.errors %}
-                                            {{ error }}<br>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label text-right">{{ form.availed_tech_support.label }}</label>
-                            <div class="col-sm-8">
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    {% for subfield in form.availed_tech_support %}
-                                        <label class="btn btn-outline-primary">
-                                            {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
-                                        </label>
-                                    {% endfor %}
-                                </div>
-                                {% if form.availed_tech_support.errors %}
-                                    <div class="alert alert-danger mt-2">
-                                        {% for error in form.availed_tech_support.errors %}
-                                            {{ error }}<br>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label text-right">{{ form.availed_fiber_optic_internet_service.label }}</label>
-                            <div class="col-sm-8">
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    {% for subfield in form.availed_fiber_optic_internet_service %}
-                                        <label class="btn btn-outline-primary">
-                                            {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
-                                        </label>
-                                    {% endfor %}
-                                </div>
-                                {% if form.availed_fiber_optic_internet_service.errors %}
-                                    <div class="alert alert-danger mt-2">
-                                        {% for error in form.availed_fiber_optic_internet_service.errors %}
-                                            {{ error }}<br>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-4 col-form-label text-right">{{ form.makes_electronic_check_payment.label }}</label>
-                            <div class="col-sm-8">
-                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                    {% for subfield in form.makes_electronic_check_payment %}
-                                        <label class="btn btn-outline-primary">
-                                            {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
-                                        </label>
-                                    {% endfor %}
-                                </div>
-                                {% if form.makes_electronic_check_payment.errors %}
-                                    <div class="alert alert-danger mt-2">
-                                        {% for error in form.makes_electronic_check_payment.errors %}
-                                            {{ error }}<br>
-                                        {% endfor %}
-                                    </div>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <div class="col-sm-12 text-center">
-                                {{ form.submit(class="btn btn-primary btn-lg btn-block") }}
-                            </div>
-                        </div>
-                    </form>
+        <div class="container-fluid mt-5">
+            <div class="card body-card">
+                <div class="card-header text-center bg-primary text-white">
+                    <h3>Customer Churn Prediction</h3>
                 </div>
-                <div class="col-lg-6">
-                    {% if predictions %}
-                        <div class="card">
-                            <div class="card-header bg-info text-white">
-                                <h4 class="text-center">Predictions</h4>
-                            </div>
-                            <div class="card-body" style="max-height: 400px; overflow-y: auto;">
-                                {% for model_name, prediction in predictions.items() %}
-                                    {% if prediction == "Customer is unlikely to Churn!" %}
-                                        <div class="alert alert-success">
-                                            <strong>{{ model_name }}:</strong> {{ prediction }}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <form action="" method="post">
+                                {{ form.hidden_tag() }}
+
+                                <div class="form-group row">
+                                    <label for="tenure" class="col-sm-4 col-form-label text-right">{{ form.tenure.label }}</label>
+                                    <div class="col-sm-8">
+                                        {{ form.tenure(class="form-control", id="tenure") }}
+                                        {% if form.tenure.errors %}
+                                            <div class="alert alert-danger mt-2">
+                                                {% for error in form.tenure.errors %}
+                                                    {{ error }}<br>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">{{ form.is_monthly_contract.label }}</label>
+                                    <div class="col-sm-8">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            {% for subfield in form.is_monthly_contract %}
+                                                <label class="btn btn-outline-primary">
+                                                    {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
+                                                </label>
+                                            {% endfor %}
                                         </div>
-                                    {% elif prediction == "Customer is likely to Churn!" %}
-                                        <div class="alert alert-danger">
-                                            <strong>{{ model_name }}:</strong> {{ prediction }}
+                                        {% if form.is_monthly_contract.errors %}
+                                            <div class="alert alert-danger mt-2">
+                                                {% for error in form.is_monthly_contract.errors %}
+                                                    {{ error }}<br>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">{{ form.availed_online_security.label }}</label>
+                                    <div class="col-sm-8">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            {% for subfield in form.availed_online_security %}
+                                                <label class="btn btn-outline-primary">
+                                                    {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
+                                                </label>
+                                            {% endfor %}
                                         </div>
-                                    {% else %}
-                                        <div class="alert alert-info">
-                                            <strong>{{ model_name }}:</strong> {{ prediction }}
+                                        {% if form.availed_online_security.errors %}
+                                            <div class="alert alert-danger mt-2">
+                                                {% for error in form.availed_online_security.errors %}
+                                                    {{ error }}<br>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">{{ form.availed_tech_support.label }}</label>
+                                    <div class="col-sm-8">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            {% for subfield in form.availed_tech_support %}
+                                                <label class="btn btn-outline-primary">
+                                                    {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
+                                                </label>
+                                            {% endfor %}
                                         </div>
-                                    {% endif %}
-                                {% endfor %}
+                                        {% if form.availed_tech_support.errors %}
+                                            <div class="alert alert-danger mt-2">
+                                                {% for error in form.availed_tech_support.errors %}
+                                                    {{ error }}<br>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">{{ form.availed_fiber_optic_internet_service.label }}</label>
+                                    <div class="col-sm-8">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            {% for subfield in form.availed_fiber_optic_internet_service %}
+                                                <label class="btn btn-outline-primary">
+                                                    {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
+                                                </label>
+                                            {% endfor %}
+                                        </div>
+                                        {% if form.availed_fiber_optic_internet_service.errors %}
+                                            <div class="alert alert-danger mt-2">
+                                                {% for error in form.availed_fiber_optic_internet_service.errors %}
+                                                    {{ error }}<br>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label text-right">{{ form.makes_electronic_check_payment.label }}</label>
+                                    <div class="col-sm-8">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            {% for subfield in form.makes_electronic_check_payment %}
+                                                <label class="btn btn-outline-primary">
+                                                    {{ subfield(class="btn-check", autocomplete="off") }} {{ subfield.label.text }}
+                                                </label>
+                                            {% endfor %}
+                                        </div>
+                                        {% if form.makes_electronic_check_payment.errors %}
+                                            <div class="alert alert-danger mt-2">
+                                                {% for error in form.makes_electronic_check_payment.errors %}
+                                                    {{ error }}<br>
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-12 text-center">
+                                        {{ form.submit(class="btn btn-warning btn-lg btn-block predict") }}
+                                    </div>
+                                    <div class="col-sm-12 text-center">
+                                        <button type="button" class="btn btn-dark btn-modal logout" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                            Logout
+                                        </button>
+                
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="staticBackdropLabel">Confirm Logout</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to Logout?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">No</button>
+                                                        <a href="{{ url_for('logout') }}" class="btn btn-success">Yes</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="col-lg-6">
+                            {% if predictions %}
+                                <div class="card">
+                                    <div class="card-header bg-info text-white">
+                                        <h4 class="text-center">Model Predictions</h4>
+                                    </div>
+                                    <div class="card-body" style="max-height: 600px; overflow-y: auto;">
+                                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                            <u>Model Predictions will appear here</u>
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                          </div>
+                                        {% for model_name, prediction in predictions.items() %}
+                                            {% if prediction == "Customer is unlikely to Churn!" %}
+                                                <div class="alert alert-success">
+                                                    <strong>{{ model_name }}:</strong> {{ prediction }}
+                                                </div>
+                                            {% elif prediction == "Customer is likely to Churn!" %}
+                                                <div class="alert alert-danger">
+                                                    <strong>{{ model_name }}:</strong> {{ prediction }}
+                                                </div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- <div class="text-center mt-3">
+                       
+                        <button type="button" class="btn btn-dark btn-modal" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Open Modal
+                        </button>
+
+                        
+                        <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Are You Sure You Want To Sign Out?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        This is the body of the modal. Are you sure you want to sign out?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                        <a href="/logout" class="btn btn-primary">Yes</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    {% endif %}
+                    </div> -->
                 </div>
-            </div>
-            <div class="text-center mt-3">
-                <p>Redirect to Homepage? <a href="{{ url_for('home') }}" class="custom-link">Home</a></p>
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+</html>

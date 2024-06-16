@@ -11,6 +11,8 @@ from wtforms.validators import DataRequired
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, RadioField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, Length, Regexp, ValidationError
 
 
 # # getting the data
@@ -23,7 +25,7 @@ class InputForm(FlaskForm):
         label="Customer Tenure in Months",
         validators=[
             DataRequired(),
-            NumberRange(min=0, message="Tenure must be a positive integer.")
+            NumberRange(min=1, message="Tenure must be a positive integer.")
         ]
     )
     is_monthly_contract = RadioField(
@@ -52,3 +54,24 @@ class InputForm(FlaskForm):
         validators=[DataRequired()]
     )
     submit = SubmitField("Predict")
+
+
+class LoginForm(FlaskForm):
+    id = StringField(
+        'Employee ID', 
+        validators=[
+            DataRequired(), 
+            Length(min=10, max=10, message="ID must be exactly 10 characters long")
+        ],
+        render_kw={"pattern": "[A-Z]{5}[0-9]{5}", "title": "ID must be 5 uppercase letters followed by 5 numbers"}
+    )
+    password = PasswordField(
+        'Password', 
+        validators=[
+            DataRequired(),
+            Length(min=8, message="Password must be at least 8 characters long")
+        ],
+        render_kw={"pattern": "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$",
+                   "title": "Password must contain at least 1 letter, 1 number, and 1 special character"}
+    )
+    submit = SubmitField('Login')
