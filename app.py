@@ -15,12 +15,12 @@ db.init_app(app)
 
 # Load models
 models = {
-    "Logistic Regression": joblib.load("ccp_1_lr.joblib"),
-    "Random Forest": joblib.load("ccp_1_rf.joblib"),
-    "Support Vector Classifier": joblib.load("ccp_1_svc.joblib"),
-    "K-Nearest Neighbors": joblib.load("ccp_1_knn.joblib"),
-    "Decision Tree": joblib.load("ccp_1_dt.joblib"),
-    "Voting Classifier": joblib.load("ccp_1_voting.joblib")
+    "Logistic Regression": joblib.load("ccp_2_lr.joblib"),
+    "Random Forest": joblib.load("ccp_2_rf.joblib"),
+    "Support Vector Classifier": joblib.load("ccp_2_svc.joblib"),
+    "K-Nearest Neighbors": joblib.load("ccp_2_knn.joblib"),
+    "Decision Tree": joblib.load("ccp_2_dt.joblib"),
+    "Voting Classifier": joblib.load("ccp_2_voting.joblib")
 }
 
 @app.route("/")
@@ -71,7 +71,7 @@ def login():
                 return redirect(url_for("predict"))
             else:
                 print("Incorrect password for employee:", employee_id)
-                flash("Login Failed. Incorrect Password!", "danger")
+                flash("Login Failed. Incorrect ID or Password!", "danger")
         else:
             print("Employee not found:", employee_id)
             flash("Login Failed. Employee not Found!", "warning")
