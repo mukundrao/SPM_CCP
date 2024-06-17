@@ -1,7 +1,7 @@
-pandas 
-joblib 
-flask 
-flask-wtf 
+pandas==2.2.2
+joblib==1.4.2 
+flask==3.0.3
+flask-wtf==1.2.1
 scikit-learn==1.2.2 
-flask-sqlalchemy
+flask-sqlalchemy==3.1.1
 gunicorn
