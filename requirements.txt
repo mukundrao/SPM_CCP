@@ -1,0 +1,7 @@
+pandas 
+joblib 
+flask 
+flask-wtf 
+scikit-learn==1.2.2 
+flask-sqlalchemy
+gunicorn
