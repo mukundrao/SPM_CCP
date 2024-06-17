@@ -15,12 +15,12 @@ db.init_app(app)
 
 # Load models
 models = {
-    "Logistic Regression": joblib.load("ccp_2_lr.joblib"),
-    "Random Forest": joblib.load("ccp_2_rf.joblib"),
-    "Support Vector Classifier": joblib.load("ccp_2_svc.joblib"),
-    "K-Nearest Neighbors": joblib.load("ccp_2_knn.joblib"),
-    "Decision Tree": joblib.load("ccp_2_dt.joblib"),
-    "Voting Classifier": joblib.load("ccp_2_voting.joblib")
+    "Logistic Regression": joblib.load("ccp_3_lr.joblib"),
+    "Random Forest": joblib.load("ccp_3_rf.joblib"),
+    "Support Vector Classifier": joblib.load("ccp_3_svc.joblib"),
+    "K-Nearest Neighbors": joblib.load("ccp_3_knn.joblib"),
+    "Decision Tree": joblib.load("ccp_3_dt.joblib"),
+    "Voting Classifier": joblib.load("ccp_3_voting.joblib")
 }
 
 @app.route("/")
