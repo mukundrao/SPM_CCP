@@ -1,3 +1,5 @@
-pip install pandas joblib flask flask-wtf scikit-learn==1.2.2
-
-(this is inside virtual environment)
+pandas
+joblib
+flask
+flask-wtf
+scikit-learn==1.2.2
